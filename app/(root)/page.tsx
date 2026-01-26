@@ -4,7 +4,11 @@ import RightSidebar from "@/components/RightSidebar";
 import React from "react";
 
 const Home = () => {
-  const loggedIn = { firstName: "Rejoice" };
+  const loggedIn = {
+    firstName: "Rejoice",
+    lastName: "Adeboye",
+    email: "adeboy@user.com",
+  };
   return (
     <section className="home no-scrollbar">
       <div className="home-content no-scrollbar">
@@ -23,7 +27,11 @@ const Home = () => {
         </header>
         Recent Transactions
       </div>
-      <RightSidebar user={loggedIn} transactions={[]} banks={[]} />
+      <RightSidebar
+        user={loggedIn}
+        transactions={[]}
+        banks={[{ currentBalance: 1350.86 }, { currentBalance: 93520.86 }]}
+      />
     </section>
   );
 };
