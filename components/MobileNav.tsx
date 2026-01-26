@@ -30,7 +30,8 @@ const MobileNav = ({ user }: MobileNavProps) => {
             className="cursor-pointer"
           />
         </SheetTrigger>
-        <SheetContent side="left" className="border-none bg-white p-4">
+        <SheetContent side="left" className="border-none bg-white">
+          <SheetTitle></SheetTitle>
           <Link
             href="/"
             className="flex cursor-pointer items-center gap-1 px-4"
@@ -42,7 +43,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
           </Link>
           <div className="mobilenav-sheet">
             <SheetClose asChild>
-              <nav className="flex h-full flex-col gap-6 !pt-16 text-white">
+              <nav className="flex h-full flex-col gap-6 pt-16 text-white">
                 {sidebarLinks.map((item) => {
                   const isActive =
                     pathname === item.route ||
@@ -56,21 +57,23 @@ const MobileNav = ({ user }: MobileNavProps) => {
                           "bg-bank-gradient": isActive,
                         })}
                       >
-                        <div className="relative size-6">
-                          <Image
-                            src={item.imgURL}
-                            alt={item.label}
-                            width={20}
-                            height={20}
-                            className={cn({
-                              "brightness-[3] invert-0": isActive,
-                            })}
-                          />
-                        </div>
-                        <span
-                          className={cn("sidebar-label", {
-                            "text-white!": isActive,
+                        <Image
+                          src={item.imgURL}
+                          alt={item.label}
+                          width={20}
+                          height={20}
+                          className={cn({
+                            "brightness-[3] invert-0": isActive,
                           })}
+                        />
+
+                        <span
+                          className={cn(
+                            "text-base font-semibold text-black-2",
+                            {
+                              "text-white!": isActive,
+                            },
+                          )}
                         >
                           {item.label}
                         </span>
@@ -81,6 +84,7 @@ const MobileNav = ({ user }: MobileNavProps) => {
                 USER
               </nav>
             </SheetClose>
+            FOOTER
           </div>
         </SheetContent>
       </Sheet>
