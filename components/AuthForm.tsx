@@ -22,10 +22,13 @@ import {
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { signUp } from "@/lib/actions/user.actions";
 
 type AuthType = "sign-in" | "sign-up";
 
 const AuthForm = ({ type }: { type: AuthType }) => {
+  const router = useRouter();
   const [user, setUser] = useState<null | unknown>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -39,6 +42,7 @@ const AuthForm = ({ type }: { type: AuthType }) => {
       firstName: "",
       lastName: "",
       address1: "",
+      city: "",
       state: "",
       postalCode: "",
       dateOfBirth: "",
@@ -49,6 +53,20 @@ const AuthForm = ({ type }: { type: AuthType }) => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true);
     try {
+      // Sign up with Appwrite & create plaid token or sign in logic goes here
+      if (type === "sign-up") {
+        const newUser = await signUp(data);
+        setUser(newUser);
+        toast.success("Account created successfully!");
+      }
+      if (type === "sign-in") {
+        // const response = await SignIn({
+        //   email: data.email,
+        //   password: data.password,
+        // // });
+        // if (response) router.push("/");
+        // toast.success("Signed in successfully!");
+      }
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -114,6 +132,13 @@ const AuthForm = ({ type }: { type: AuthType }) => {
                     name="address1"
                     label="Address"
                     placeholder="Enter specific address"
+                    type="text"
+                  />
+                  <CustomInput
+                    control={form.control}
+                    name="city"
+                    label="City"
+                    placeholder="Enter your city"
                     type="text"
                   />
 

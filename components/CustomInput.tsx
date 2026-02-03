@@ -5,11 +5,9 @@ import { Input } from "./ui/input";
 import z from "zod";
 import { authFormSchema } from "@/lib/utils";
 
-const formSchema = authFormSchema("sign-up");
-
 interface CustomInputProps {
-  control: Control<z.infer<typeof formSchema>>;
-  name: FieldPath<z.infer<typeof formSchema>>;
+  control: Control<z.infer<ReturnType<typeof authFormSchema>>>;
+  name: FieldPath<z.infer<ReturnType<typeof authFormSchema>>>;
   label: string;
   placeholder: string;
   type: React.HTMLInputTypeAttribute;
