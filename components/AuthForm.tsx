@@ -23,7 +23,7 @@ import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { signUp } from "@/lib/actions/user.actions";
+import { signIn, signUp } from "@/lib/actions/user.actions";
 
 type AuthType = "sign-in" | "sign-up";
 
@@ -60,14 +60,14 @@ const AuthForm = ({ type }: { type: AuthType }) => {
         toast.success("Account created successfully!");
       }
       if (type === "sign-in") {
-        // const response = await SignIn({
-        //   email: data.email,
-        //   password: data.password,
-        // // });
-        // if (response) router.push("/");
-        // toast.success("Signed in successfully!");
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) router.push("/");
+        console.log("Sign in response", response);
+        toast.success("Signed in successfully!");
       }
-      console.log(data);
     } catch (error) {
       console.log(error);
     } finally {

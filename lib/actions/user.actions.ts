@@ -4,11 +4,26 @@ import { ID } from "node-appwrite";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { cookies } from "next/headers";
 import { parseStringify } from "../utils";
+import { email } from "zod";
 
-export const signIn = async () => {
+export const signIn = async ({ email, password }: signInProps) => {
   try {
+    const { account } = await createAdminClient();
+
+    const session = await account.createEmailPasswordSession(email, password);
+
+    const cookieStore = await cookies();
+    cookieStore.set("appwrite-session", session.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+
+    return parseStringify(session);
   } catch (error) {
-    console.error("Error", error);
+    console.error("Sign in Error", error);
+    throw error;
   }
 };
 
@@ -46,8 +61,27 @@ export const signUp = async (userData: SignUpParams) => {
 export async function getLoggedInUser() {
   try {
     const { account } = await createSessionClient();
-    return await account.get();
+    const user = await account.get();
+    return parseStringify(user);
   } catch (error) {
     return null;
   }
 }
+
+export const logoutAccount = async () => {
+  try {
+    const { account } = await createSessionClient();
+
+    // End Appwrite session first
+    await account.deleteSession("current");
+
+    // Then remove cookie
+    const cookieStore = await cookies();
+    cookieStore.delete("appwrite-session");
+
+    return true;
+  } catch (error) {
+    console.error("Logout Error:", error);
+    return false;
+  }
+};
