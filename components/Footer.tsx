@@ -9,7 +9,6 @@ const Footer = ({ user, type = "desktop" }: FooterProps) => {
     const loggedOut = await logoutAccount();
     if (loggedOut) {
       router.push("/sign-in");
-      console.log("Logged out successfully");
     } else {
       // Handle logout failure, e.g., show an error message
       console.error("Logout failed");

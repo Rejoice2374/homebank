@@ -199,11 +199,11 @@ body {
 
 /* Bank Card */
 .bank-card {
-  @apply relative flex h-[190px] w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-bank-gradient  backdrop-blur-[6px];
+  @apply relative flex h-47.5 w-full max-w-[320px] justify-between rounded-[20px] border border-white bg-bank-gradient backdrop-blur-[6px];
 }
 
 .bank-card_content {
-  @apply relative z-10 flex size-full max-w-[228px] flex-col justify-between rounded-l-[20px] bg-gray-700 bg-bank-gradient px-5 pb-4 pt-5;
+  @apply relative z-10 flex size-full max-w-57 flex-col justify-between rounded-l-[20px] bg-gray-700 bg-bank-gradient px-5 pb-4 pt-5;
 }
 
 .bank-card_icon {
@@ -212,7 +212,7 @@ body {
 
 /* Bank Info */
 .bank-info {
-  @apply gap-[18px] flex p-4 transition-all border bg-blue-25 border-transparent;
+  @apply gap-4.5 flex p-4 transition-all border bg-blue-25 border-transparent;
 }
 
 /* Category Badge */
@@ -221,7 +221,7 @@ body {
 }
 
 .banktab-item {
-  @apply gap-[18px] border-b-2 flex px-2 sm:px-4 py-2 transition-all;
+  @apply gap-4.5 border-b-2 flex px-2 sm:px-4 py-2 transition-all;
 }
 
 /* Mobile nav */
@@ -243,7 +243,7 @@ body {
 }
 
 .plaidlink-default {
-  @apply flex !justify-start cursor-pointer gap-3 rounded-lg !bg-transparent flex-row;
+  @apply flex justify-start! cursor-pointer gap-3 rounded-lg bg-transparent! flex-row;
 }
 
 /* Auth */
@@ -253,7 +253,7 @@ body {
 
 /* Auth Form */
 .auth-form {
-  @apply flex min-h-screen w-full max-w-[420px] flex-col justify-center gap-5 py-10 md:gap-8;
+  @apply flex min-h-screen w-full max-w-105 flex-col justify-center gap-5 py-10 md:gap-8;
 }
 
 .form-item {
@@ -261,7 +261,7 @@ body {
 }
 
 .form-label {
-  @apply text-sm w-full max-w-[280px] font-medium text-gray-700;
+  @apply text-sm w-full max-w-70 font-medium text-gray-700;
 }
 
 .form-message {

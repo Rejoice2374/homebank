@@ -6,7 +6,6 @@ import { getLoggedInUser } from "@/lib/actions/user.actions";
 
 const Home = async () => {
   const loggedIn = await getLoggedInUser();
-  console.log("Logged in user", loggedIn);
 
   return (
     <section className="home no-scrollbar">

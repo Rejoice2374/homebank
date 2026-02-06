@@ -65,7 +65,6 @@ const AuthForm = ({ type }: { type: AuthType }) => {
           password: data.password,
         });
         if (response) router.push("/");
-        console.log("Sign in response", response);
         toast.success("Signed in successfully!");
       }
     } catch (error) {
