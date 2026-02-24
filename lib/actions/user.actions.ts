@@ -139,6 +139,10 @@ export const logoutAccount = async () => {
 
 export const createLinkToken = async (user: User) => {
   try {
+    if (!user || !user.$id) {
+      throw new Error("User not authenticated");
+    }
+
     const tokenParams = {
       user: {
         client_user_id: user.$id,

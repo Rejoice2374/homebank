@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import { success } from "zod";
-import { StyledString } from "next/dist/build/swc/types";
 import { useRouter } from "next/navigation";
 import {
   usePlaidLink,
@@ -15,13 +13,19 @@ import {
 
 const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   const router = useRouter();
-  const [token, setToken] = useState("");
+
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user) return;
+
     const getLinkToken = async () => {
       const data = await createLinkToken(user);
+      console.log("Link Token Data:", data);
 
-      setToken(data?.linkToken);
+      if (data?.LinkToken) {
+        setToken(data.LinkToken);
+      }
     };
 
     getLinkToken();
@@ -40,19 +44,22 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   );
 
   const config: PlaidLinkOptions = {
-    token,
+    token: token,
     onSuccess,
   };
 
   const { open, ready } = usePlaidLink(config);
 
+  console.log("token created:", token);
+  console.log("Plaid Link Ready:", ready);
+
   return (
     <>
       {variant === "primary" ? (
         <Button
-          className="plaidlink-primary"
           onClick={() => open()}
-          disabled={!ready}
+          disabled={!ready || !token}
+          className="plaidlink-primary"
         >
           Connect bank
         </Button>

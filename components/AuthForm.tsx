@@ -13,12 +13,6 @@ import {
   FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroupTextarea,
-} from "@/components/ui/input-group";
 import CustomInput from "./CustomInput";
 import { authFormSchema } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
@@ -72,6 +66,7 @@ const AuthForm = ({ type }: { type: AuthType }) => {
         const newUser = await signUp(userData);
         setUser(newUser);
         toast.success("Account created successfully!");
+        console.log("New User:", newUser);
       }
       if (type === "sign-in") {
         const response = await signIn({
@@ -250,7 +245,7 @@ const AuthForm = ({ type }: { type: AuthType }) => {
           </footer>
         </>
       )}
-      <Toaster richColors position="top-right" />
+      <Toaster richColors position="bottom-left" />
     </section>
   );
 };
