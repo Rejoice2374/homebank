@@ -3,9 +3,21 @@ import TotalBalanceBox from "@/components/TotalBalanceBox";
 import RightSidebar from "@/components/RightSidebar";
 import React from "react";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
+import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
 
-const Home = async () => {
+const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
   const loggedIn = await getLoggedInUser();
+  const accounts = await getAccounts({ userId: loggedIn.$id });
+
+  if (!accounts) return;
+
+  const accountsData = accounts?.data;
+
+  const appwriteItemId = (id as string) || accountsData[0]?.appwriteItemId;
+
+  const account = await getAccount({ appwriteItemId });
+
+  console.log({ soft: accountsData, hard: account });
 
   return (
     <section className="home no-scrollbar">
@@ -14,21 +26,21 @@ const Home = async () => {
           <HeaderBox
             type="greeting"
             title="Welcome"
-            user={loggedIn?.name || "Guest"}
+            user={loggedIn?.firstName || "Guest"}
             subtext="Access and manage your account."
           />
           <TotalBalanceBox
-            accounts={[]}
-            totalBanks={1}
-            totalCurrentBalance={1250.35}
+            accounts={[accountsData]}
+            totalBanks={accounts?.totalBanks}
+            totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
         Recent Transactions
       </div>
       <RightSidebar
         user={loggedIn}
-        transactions={[]}
-        banks={[{ currentBalance: 1350.86 }, { currentBalance: 93520.86 }]}
+        transactions={[accounts?.transactions]}
+        banks={accountsData?.slice(0, 2)}
       />
     </section>
   );
