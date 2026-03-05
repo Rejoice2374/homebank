@@ -4,8 +4,10 @@ import RightSidebar from "@/components/RightSidebar";
 import React from "react";
 import { getLoggedInUser } from "@/lib/actions/user.actions";
 import { getAccount, getAccounts } from "@/lib/actions/bank.actions";
+import RecentTransactions from "@/components/RecentTransactions";
 
 const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
+  const currentPage = Number(page as string) || 1;
   const loggedIn = await getLoggedInUser();
   const accounts = await getAccounts({ userId: loggedIn.$id });
 
@@ -35,7 +37,12 @@ const Home = async ({ searchParams: { id, page } }: SearchParamProps) => {
             totalCurrentBalance={accounts?.totalCurrentBalance}
           />
         </header>
-        Recent Transactions
+        <RecentTransactions
+          accounts={accountsData}
+          transactions={account?.transactions}
+          appwriteItemId={appwriteItemId}
+          page={currentPage}
+        />
       </div>
       <RightSidebar
         user={loggedIn}
