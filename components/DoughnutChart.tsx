@@ -6,9 +6,16 @@ import { Doughnut } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
-  const accountNames = accounts.map((a) => a.name);
-  const balances = accounts.map((a) => a.currentBalance);
+  // Flatten nested arrays safely
+  const accountObjects = Array.isArray(accounts) ? accounts.flat() : [];
+
+  const accountNames = accountObjects.map((a) => a?.name);
+  const balances = accountObjects.map((a) => a?.currentBalance);
+
+  console.log(accountObjects);
+
   const data = {
+    labels: accountNames,
     datasets: [
       {
         label: "Banks",
@@ -17,8 +24,8 @@ const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
         hoverBackgroundColor: ["#0747b6", "#2265d8", "#2f91fa"],
       },
     ],
-    labels: accountNames,
   };
+
   return (
     <Doughnut
       data={data}
