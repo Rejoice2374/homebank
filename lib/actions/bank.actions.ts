@@ -69,6 +69,8 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
     // get bank from db
     const bank = await getBank({ documentId: appwriteItemId });
 
+    if (!bank) throw new Error("Bank not found");
+
     // get account info from plaid
     const accountsResponse = await plaidClient.accountsGet({
       access_token: bank.accessToken,
@@ -97,9 +99,9 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
       institutionId: accountsResponse.data.item.institution_id!,
     });
 
-    const transactions = await getTransactions({
-      accessToken: bank?.accessToken,
-    });
+    const transactions = bank?.accessToken
+      ? await getTransactions({ accessToken: bank.accessToken })
+      : [];
 
     const account = {
       id: accountData.account_id,
@@ -121,7 +123,7 @@ export const getAccount = async ({ appwriteItemId }: getAccountProps) => {
 
     return parseStringify({
       data: account,
-      // transactions: allTransactions,
+      transactions: transactions,
     });
   } catch (error) {
     console.error("An error occurred while getting the account:", error);
