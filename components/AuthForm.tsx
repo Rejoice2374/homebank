@@ -66,7 +66,6 @@ const AuthForm = ({ type }: { type: AuthType }) => {
         const newUser = await signUp(userData);
         setUser(newUser);
         toast.success("Account created successfully!");
-        console.log("New User:", newUser);
       }
       if (type === "sign-in") {
         const response = await signIn({

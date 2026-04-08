@@ -12,8 +12,6 @@ const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
   const accountNames = accountObjects.map((a) => a?.name);
   const balances = accountObjects.map((a) => a?.currentBalance);
 
-  console.log(accountObjects);
-
   const data = {
     labels: accountNames,
     datasets: [
